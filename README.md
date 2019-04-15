@@ -6,13 +6,21 @@ without a rolling shutter, and allows for precise syncing of multiple Pi's.
 
 The project is still under active development.
 
-## Install
+## Setup
 
-Install dependencies,
+Enable the camera using `sudo raspiconfig`. Make sure that you can take an image
+using `raspistill -o test.jpeg`.
+
+Then,
 
 ```
-sudo apt-get install libopencv-dev
+sudo apt-get install wiringpi
 ```
+
+Add `dtparam=i2c_vc=on` and the end of `/boot/config.txt` and `i2c-dev` to
+`/etc/modules-load.d/modules.conf`.
+
+Then reboot.
 
 Build the project,
 
@@ -23,5 +31,5 @@ make all
 And then run it,
 
 ```
-./pishot
+sudo python pishot.py
 ```
