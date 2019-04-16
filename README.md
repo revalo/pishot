@@ -80,3 +80,12 @@ will open the shutter and,
 ```
 
 will close the shutter.
+
+## Contributors
+
+This work was done in collaboration with Varun Mangalick, Kristin Sheridan and
+Candace Okumko.
+
+## License
+
+Copyright (c) 2019 Shreyas Kapur. Released under MIT License.
