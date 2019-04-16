@@ -1,3 +1,9 @@
 *.o
 pishot
 .vscode
+*.jpeg
+*.jpg
+*.png
+*.264
+*.h264
+*.mp4
