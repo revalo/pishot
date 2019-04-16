@@ -1,3 +1,6 @@
+"""Main PiShot script.
+"""
+
 from __future__ import print_function
 
 import os
@@ -7,8 +10,8 @@ import signal
 import argparse
 import RPi.GPIO as GPIO
 
-INPUT_PIN = 17
-CLONE_PIN = 23
+INPUT_PIN = 17  # Trigger pin.
+CLONE_PIN = 23  # Mirror trigger pin.
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(INPUT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -19,6 +22,10 @@ trigger_process = None
 
 
 def write_frex_registers():
+    """Enables FREX mode on the ov5647 camera module. And sets the integration
+    time to the maximum allowed.
+    """
+
     process = subprocess.Popen("./i2cwrite /dev/i2c-0 3002 ff".split())
     process.wait()
 
@@ -28,14 +35,10 @@ def write_frex_registers():
     process.wait()
 
 
-def set_frex_trigger(on):
-    val = "01" if on else "00"
-
-    process = subprocess.Popen(("./i2cwrite /dev/i2c-0 3b08 %s" % val).split())
-    process.wait()
-
-
 def open_shutter():
+    """Start integrating FREX frames.
+    """
+
     global raspivid_process
     global trigger_process
 
@@ -50,6 +53,9 @@ def open_shutter():
 
 
 def close_shutter(filename):
+    """Close the shutter and save the FREX frames.
+    """
+
     global raspivid_process
     global trigger_process
 
@@ -63,22 +69,32 @@ def close_shutter(filename):
 
 
 def one_shot(t):
+    """Open the shutter, wait for a bit and then close it.
+    """
+
     open_shutter()
     time.sleep(t)
     close_shutter("test.png")
 
 
 def slave_loop():
+    """Operate the Pi in slave mode.
+    """
+
     while True:
         GPIO.wait_for_edge(INPUT_PIN, GPIO.RISING)
         GPIO.output(CLONE_PIN, 1)
         open_shutter()
+
         GPIO.wait_for_edge(INPUT_PIN, GPIO.FALLING)
         GPIO.output(CLONE_PIN, 0)
         close_shutter("test.png")
 
 
 def master_loop():
+    """Operate the Pi in master mode.
+    """
+
     while True:
         command = raw_input(">> ")
 

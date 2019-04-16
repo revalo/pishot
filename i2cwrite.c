@@ -22,18 +22,18 @@ int main(int argc, char *argv[])
     assert(i2c_fd);
     assert(ioctl(i2c_fd, I2C_SLAVE_FORCE, 0x36) >= 0);
 
-        unsigned addr = strtol(argv[2], NULL, 16);
-        unsigned len  = 2+argc-3;
-        unsigned i;
-        char *buf = malloc(len);
+    unsigned addr = strtol(argv[2], NULL, 16);
+    unsigned len  = 2+argc-3;
+    unsigned i;
+    char *buf = malloc(len);
 
-        buf[0]=addr>>8;
-        buf[1]=addr&0xFF;
-        for(i=3; i<argc; ++i)
-            buf[i-1]=strtol(argv[i], NULL, 16);
+    buf[0]=addr>>8;
+    buf[1]=addr&0xFF;
+    for(i=3; i<argc; ++i)
+        buf[i-1]=strtol(argv[i], NULL, 16);
 
-        assert( WRITE_I2C(i2c_fd, buf, len)==0 );
-        free(buf);
+    assert( WRITE_I2C(i2c_fd, buf, len)==0 );
+    free(buf);
 
     if (i2c_fd)
         close(i2c_fd);
