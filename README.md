@@ -31,5 +31,50 @@ make all
 And then run it,
 
 ```
-sudo python pishot.py
+sudo python pishot.py --one -t 10
 ```
+
+This will take a 10 second exposure and save all the frames to `temp.264`.
+
+**Note:** The auto white balance makes the initial images really sad. Just
+wait for a minute before firing the strobe to get a better colored image.
+
+## Usage
+
+Multiple Pi's can be daisy changed to open and close shutters at the same time.
+All slave Pi's run,
+
+```
+sudo python pishot.py --slave
+```
+
+And the master Pi runs,
+
+```
+sudo python pishot.py --master
+```
+
+The Pi's must be chained as follows, (all the grounds must be tied together)
+
+```
+Master Pi's 23 --> Slave 1's 17
+Slave 1's 23 --> Slave 2's 17
+Slave n's 23 --> Slave (n+1)'s 17
+.
+.
+.
+```
+
+Then, in the Master's prompt,
+
+```
+>> o
+```
+
+will open the shutter and,
+
+```
+>> c
+```
+
+will close the shutter.
