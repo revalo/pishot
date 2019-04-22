@@ -59,7 +59,6 @@ def close_shutter(filename):
     global raspivid_process
     global trigger_process
 
-    set_frex_trigger(False)
     if raspivid_process is None:
         return
 
