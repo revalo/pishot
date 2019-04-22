@@ -46,7 +46,7 @@ def open_shutter():
         os.remove("temp.264")
 
     raspivid_process = subprocess.Popen(
-        "raspivid -md 2 -fps 1 -pts test.pts -t 800000 -o temp.264".split()
+        "raspivid -md 2 -fps 1 --awb flash -pts test.pts -t 800000 -o temp.264".split()
     )
     time.sleep(1)
     write_frex_registers()
