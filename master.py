@@ -6,6 +6,16 @@ from __future__ import print_function
 import requests
 import argparse
 import dweepy
+import webbrowser
+
+from utils import get_name
+from multiprocessing import current_process
+from flask import Flask, render_template, jsonify
+
+app = Flask(__name__)
+
+SECRET = ""
+PIS = {}
 
 def api_root(ip):
     return "http://%s:5000" % ip
@@ -25,6 +35,8 @@ def get_addresses(secret):
 
     gc = ips[:]
 
+    rv = {}
+
     for ip in ips:
         url = api_root(ip) + "/ping"
 
@@ -34,13 +46,34 @@ def get_addresses(secret):
 
             if 'uuid' not in j:
                 gc.remove(ip)
+
+            rv[j['uuid']] = ip
         except:
             gc.remove(ip)
 
     dweepy.dweet_for(secret, {'ips': gc})
 
-    return gc
-    
+    return rv
+
+@app.route("/api/refresh")
+def refresh_device_list():
+    global SECRET
+    global PIS
+
+    PIS = get_addresses(SECRET)
+    return device_list()
+
+@app.route("/api/pis")
+def device_list():
+    return jsonify([{
+        "uuid": uuid,
+        "ip": ip,
+        "name": get_name(uuid)
+    } for uuid, ip in PIS.items()])
+
+@app.route("/")
+def index():
+    return render_template("app.html")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="PiShot master commander.")
@@ -54,9 +87,38 @@ if __name__ == "__main__":
         required=True,
     )
 
+    parser.add_argument(
+        "--list",
+        help="Just list all the available Pi's instead of running the server.",
+        action="store_true",
+        dest="list",
+    )
+
+    parser.add_argument(
+        "--silent",
+        help="Does not open a new chrome window on every restart.",
+        action="store_true",
+        dest="silent",
+    )
+
     args = parser.parse_args()
 
-    print("Getting all Pi's ...")
+    if args.list:
+        print("Getting all Pi's ...")
 
-    for ip in get_addresses(args.secret):
-        print(ip)
+        pis = get_addresses(args.secret)
+        for ip in pis.values():
+            print(ip)
+
+        print("Found %i Pi's." % len(pis))
+    else:
+        SECRET = args.secret
+
+        if not args.silent:
+            webbrowser.open("http://localhost:5555")
+
+        app.run(
+            host = "0.0.0.0",
+            port = 5555,
+            debug = args.silent,
+        )

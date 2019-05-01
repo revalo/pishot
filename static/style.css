@@ -1,0 +1,51 @@
+body {
+    font-family: 'Roboto';
+    font-style: 'normal';
+    font-weight: 400;
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.main {
+    width: 100%;
+}
+
+.header {
+    display: grid;
+    grid-template-columns: 15rem auto;
+    grid-template-rows: 4rem;
+    background-color: #f1f1f1;
+}
+
+.logo {
+    text-align: center;
+    font-size: 2em;
+    font-weight: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.nav-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    background-color: pink;
+}
+
+.content {
+    padding: 3rem;
+}
+
+[v-cloak] {display: none}

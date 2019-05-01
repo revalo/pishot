@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PiShot Master</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,500,700,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="app" class="main">
+        <div class="header" v-cloak>
+            <div class="logo">PiShot</div>
+            <div class="nav">
+                <div @click="view = 'devices'" class="nav-item">Devices</div>
+                <div @click="view = 'view'" class="nav-item">View</div>
+                <div @click="view = 'onion'" class="nav-item">Onion Skin</div>
+                <div @click="view = 'shutter'" class="nav-item">Shutter</div>
+            </div>
+        </div>
+        <div class="content" v-cloak>
+            <div class="devices" v-if="view == 'devices'">
+                <button class="ui red button" :class="{loading: loadingDevices}" @click="reloadDevices">
+                    <i class="redo icon"></i> Refresh
+                </button>
+                <button class="ui blue button"><i class="wifi icon"></i> Ping</button>
+                {% raw %}
+                <a class="ui black circular label">
+                    {{ pis.length }}
+                </a>
+                {% endraw %}
+
+                <table class="ui celled table">
+                    <thead>
+                      <tr><th>Name</th>
+                      <th>IP</th>
+                      <th>Actions</th>
+                    </tr></thead>
+                    <tbody>
+                      {% raw %}
+                      <tr v-for="pi in pis">
+                        <td data-label="Name">{{ pi.name }}</td>
+                        <td data-label="IP">{{ pi.ip }}</td>
+                        <td>
+                            <button @click="viewPi(pi)" class="ui icon button">
+                                View
+                            </button>
+                        </td>
+                      </tr>
+                      {% endraw %}
+                    </tbody>
+                  </table>
+            </div>
+
+            <div class="viewer" v-if="view == 'view'">
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

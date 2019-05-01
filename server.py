@@ -44,7 +44,7 @@ def ip_update_loop(secret, verbose):
         except:
             pass
 
-        time.sleep(5)
+        time.sleep(20)
 
 @app.route('/ping')
 def ping():
