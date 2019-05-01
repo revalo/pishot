@@ -8,6 +8,7 @@ import dweepy
 import time
 import threading
 import argparse
+import os
 
 from uuid import getnode as get_mac
 from flask import Flask, jsonify
@@ -49,6 +50,11 @@ def ip_update_loop(secret, verbose):
 @app.route('/ping')
 def ping():
     return jsonify({"uuid": get_hw_id()})
+
+@app.route('/reboot')
+def reboot():
+    os.system('reboot now')
+    return jsonify({"ok": "ok"})
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="PiShot slave server.")

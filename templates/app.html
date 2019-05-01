@@ -17,7 +17,6 @@
             <div class="logo">PiShot</div>
             <div class="nav">
                 <div @click="view = 'devices'" class="nav-item">Devices</div>
-                <div @click="view = 'view'" class="nav-item">View</div>
                 <div @click="view = 'onion'" class="nav-item">Onion Skin</div>
                 <div @click="view = 'shutter'" class="nav-item">Shutter</div>
             </div>
@@ -27,7 +26,7 @@
                 <button class="ui red button" :class="{loading: loadingDevices}" @click="reloadDevices">
                     <i class="redo icon"></i> Refresh
                 </button>
-                <button class="ui blue button"><i class="wifi icon"></i> Ping</button>
+                <button @click="rebootDevices" class="ui blue button"><i class="bomb icon"></i> Reboot</button>
                 {% raw %}
                 <a class="ui black circular label">
                     {{ pis.length }}
@@ -44,10 +43,18 @@
                       {% raw %}
                       <tr v-for="pi in pis">
                         <td data-label="Name">{{ pi.name }}</td>
-                        <td data-label="IP">{{ pi.ip }}</td>
+                        <td data-label="IP">
+                            {{ pi.ip }}
+                            <button @click="cpip(pi.ip)" class="circular ui icon button mini orange">
+                                <i class="icon copy"></i>
+                            </button>
+                        </td>
                         <td>
                             <button @click="viewPi(pi)" class="ui icon button">
                                 View
+                            </button>
+                            <button @click="rebootDevice(pi)" class="ui icon button">
+                                Reboot
                             </button>
                         </td>
                       </tr>
@@ -57,7 +64,11 @@
             </div>
 
             <div class="viewer" v-if="view == 'view'">
-                
+
+            </div>
+
+            <div class="shutter" v-if="view == 'shutter'">
+
             </div>
         </div>
     </div>

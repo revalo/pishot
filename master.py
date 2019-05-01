@@ -71,6 +71,37 @@ def device_list():
         "name": get_name(uuid)
     } for uuid, ip in PIS.items()])
 
+@app.route("/api/reboot/all")
+def reboot_devices():
+    errors = []
+
+    for uuid, ip in PIS.items():
+        try:
+            requests.get(api_root(ip) + '/reboot')
+        except Exception as e:
+            print(e)
+            errors.append(get_name(uuid))
+
+    return jsonify({
+        'errors': errors,
+    })
+
+@app.route("/api/<uuid>/reboot")
+def reboot_device(uuid):
+    ip = PIS.get(uuid, "")
+
+    try:
+        requests.get(api_root(ip) + '/reboot')
+        return jsonify({
+            'success': True,
+        })
+    except Exception as e:
+        print(e)
+        return jsonify({
+            'success': False,
+            'error': 'error',
+        })
+
 @app.route("/")
 def index():
     return render_template("app.html")
