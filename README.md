@@ -47,7 +47,9 @@ The first time you run this, it might not work, just try it again.
 **Note:** The auto white balance makes the initial images really sad. Just
 wait for a minute before firing the strobe to get a better colored image.
 
-## Server Based Usage
+## Usage
+
+### Server Based
 
 PiShot comes with a nice GUI to control each Raspberry Pi remotely, including
 hostname management, remote viewing and camera alignment tools.
@@ -70,7 +72,7 @@ python master.py --secret SECRET
 
 Note that the `SECRET` here is the same secret that you used with all the Pi's.
 
-## GPIO Based Usage
+### GPIO Based
 
 In the event that your Raspberry Pi's don't have networking access, you can
 trigger the Pi's by chaining their GPIOs.
