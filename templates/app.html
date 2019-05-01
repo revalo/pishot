@@ -45,7 +45,7 @@
                         <td data-label="Name">{{ pi.name }}</td>
                         <td data-label="IP">
                             {{ pi.ip }}
-                            <button @click="cpip(pi.ip)" class="circular ui icon button mini orange">
+                            <button @click="cpip('ssh pi@' + pi.ip)" class="circular ui icon button mini orange">
                                 <i class="icon copy"></i>
                             </button>
                         </td>

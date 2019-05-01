@@ -14,10 +14,10 @@ Here is a balloon popping at two different angles:
 
 ## Setup
 
-Enable the camera using `sudo raspiconfig`. Make sure that you can take an image
-using `raspistill -o test.jpeg`.
+Enable the camera using `sudo raspi-config`. Make sure that you can take an
+image using `raspistill -o test.jpeg`.
 
-Then,
+Then, install dependencies,
 
 ```
 sudo apt-get install wiringpi
@@ -35,20 +35,24 @@ Build the project,
 make all
 ```
 
-And then run it,
+And then run a quick test to make sure everything is working,
 
 ```
 sudo python pishot.py --one -t 10
 ```
 
 This will take a 10 second exposure and save all the frames to `temp.264`.
+The first time you run this, it might not work, just try it again.
 
 **Note:** The auto white balance makes the initial images really sad. Just
 wait for a minute before firing the strobe to get a better colored image.
 
 ## Server Based Usage
 
-If you want to remotely control each PI, on each PI run,
+PiShot comes with a nice GUI to control each Raspberry Pi remotely, including
+hostname management, remote viewing and camera alignment tools.
+
+Configure each Pi to run the following script on boot-up,
 
 ```
 python server.py --secret SECRET
@@ -57,14 +61,19 @@ python server.py --secret SECRET
 Replace `SECRET` with a long unrecognizable string. Make sure this secret is
 consistent across all PI's and make sure we write it down.
 
-For now this only has IP broadcast. To see the list of all PI IP's, on your own
-computer run,
+Make sure your computer / laptop is on the same network as all the Pi devices
+you wish to remote control. To launch the GUI use the command,
 
 ```
 python master.py --secret SECRET
 ```
 
+Note that the `SECRET` here is the same secret that you used with all the Pi's.
+
 ## GPIO Based Usage
+
+In the event that your Raspberry Pi's don't have networking access, you can
+trigger the Pi's by chaining their GPIOs.
 
 Multiple Pi's can be daisy changed to open and close shutters at the same time.
 All slave Pi's run,
@@ -79,7 +88,7 @@ And the master Pi runs,
 sudo python pishot.py --master
 ```
 
-The Pi's must be chained as follows, (all the grounds must be tied together)
+The Pi's must be chained as follows, (all the grounds must be tied together!)
 
 ```
 Master Pi's 23 --> Slave 1's 17
@@ -106,8 +115,11 @@ will close the shutter.
 
 ## Contributors
 
-This work was done in collaboration with Varun Mangalick, Kristin Sheridan and
-Candace Okumko.
+This work was done by Varun Mangalick, Kristin Sheridan, Candace Okumko and
+Shreyas Kapur as our final project for our class at MIT called [6.163: Strobe Project Lab](http://student.mit.edu/catalog/search.cgi?search=6.163&style=verbatim).
+
+The work was done under the supervision of Dr. James Bales, who is an absolute
+legend at helping us figure stuff out.
 
 ## License
 
