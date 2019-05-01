@@ -1,6 +1,5 @@
 # PiShot
-
-![PiShot Example](https://media.giphy.com/media/LpFQidfr2nncv47Wto/giphy.gif)
+![Python](https://img.shields.io/badge/python-v2.7+-blue.svg) [![GitHub Issues](https://img.shields.io/github/issues/revalo/pishot.svg)](https://github.com/revalo/pishot/issues) ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 PiShot allows capturing high-speed strobe images using the Raspberry Pi v1
 Camera. Specifically, it allows the v1 camera to operate in an open shutter mode
@@ -8,7 +7,13 @@ without a rolling shutter, and allows for precise syncing of multiple Pi's.
 
 The project is still under active development.
 
-Here is a balloon popping at two different angles:
+## Examples
+
+Here is a ball splashing in water,
+
+![PiShot Example](https://media.giphy.com/media/LpFQidfr2nncv47Wto/giphy.gif)
+
+Here is a balloon popping at two different angles,
 
 ![PiShot Example 2](https://media.giphy.com/media/H7rjlqfdurNpekRdOX/giphy.gif)
 
