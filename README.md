@@ -1,5 +1,5 @@
 # PiShot
-![Python](https://img.shields.io/badge/python-v2.7+-blue.svg) [![GitHub Issues](https://img.shields.io/github/issues/revalo/pishot.svg)](https://github.com/revalo/pishot/issues) ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+![Python](https://img.shields.io/badge/python-v2.7+-blue.svg) [![License](https://img.shields.io/badge/license-MIT-orange.svg)](https://opensource.org/licenses/MIT)
 
 PiShot allows capturing high-speed strobe images using the Raspberry Pi v1
 Camera. Specifically, it allows the v1 camera to operate in an open shutter mode
