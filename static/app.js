@@ -5,6 +5,7 @@ let app = new Vue({
         loadingDevices: false,
         view: 'devices',
         pis: [],
+        vf: '',
     },
     methods: {
         reloadDevices: function() {
@@ -27,7 +28,10 @@ let app = new Vue({
         },
         cpip: function(ip) {
             copyStringToClipboard(ip);
-        }
+        },
+        requestViewFrame() {
+
+        },
     },
     mounted: function() {
         this.reloadDevices();

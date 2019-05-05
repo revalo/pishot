@@ -10,6 +10,7 @@ import threading
 import argparse
 import os
 
+from utils import get_thing
 from uuid import getnode as get_mac
 from flask import Flask, jsonify
 
@@ -26,6 +27,8 @@ def get_hw_id():
     return str(hex(get_mac()))
 
 def ip_update_loop(secret, verbose):
+    secret = get_thing(secret)
+    
     while True:
         try:
             ips = []

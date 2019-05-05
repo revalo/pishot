@@ -8,7 +8,7 @@ import argparse
 import dweepy
 import webbrowser
 
-from utils import get_name
+from utils import get_name, get_thing
 from multiprocessing import current_process
 from flask import Flask, render_template, jsonify
 
@@ -24,6 +24,8 @@ def get_addresses(secret):
     """Returns a list of all registered addresses and pings them and garbage
     collects stale addresses.
     """
+
+    secret = get_thing(secret)
 
     ips = []
 

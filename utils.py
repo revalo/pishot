@@ -10,3 +10,12 @@ def get_name(uuid):
         lines = f.readlines()
 
     return lines[n % len(lines)].strip().lower()
+
+def get_thing(secret):
+    """Get dweet thing name from secret.
+    """
+
+    m = hashlib.sha1()
+    m.update(secret)
+
+    return m.hexdigest()

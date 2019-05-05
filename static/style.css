@@ -49,3 +49,23 @@ body {
 }
 
 [v-cloak] {display: none}
+
+.viewer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.viewport {
+    width: 720px;
+    height: 480px;
+    border: 1px black solid;
+}
+
+.view-head {
+    width: 720px;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}

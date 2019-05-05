@@ -64,7 +64,28 @@
             </div>
 
             <div class="viewer" v-if="view == 'view'">
-
+                <div class="view-head">
+                    <button class="ui icon green button" @click="view = 'devices'">
+                        <i class="angle left icon"></i>
+                    </button>
+                    <button class="ui icon button" @click="requestViewFrame">
+                        <i class="camera icon"></i>
+                    </button>
+                    {% raw %}
+                    <h3>{{ currentViewPi.name }}</h3>
+                    {% endraw %}
+                </div>
+                <div class="viewport">
+                    <img class="vf" :src="vf" alt="">
+                </div>
+                <div class="view-head">
+                    {% raw %}
+                    <select class="ui search dropdown">
+                        <option value="">None</option>
+                        <option :value="pi.uuid" v-for="pi in pis">{{ pi.name }}</option>
+                    </select>
+                    {% endraw %}
+                </div>
             </div>
 
             <div class="shutter" v-if="view == 'shutter'">
