@@ -8,11 +8,15 @@ import dweepy
 import time
 import threading
 import argparse
+import base64
 import os
 
-from utils import get_thing
+from utils import get_thing, is_raspberry_pi
 from uuid import getnode as get_mac
 from flask import Flask, jsonify
+
+if is_raspberry_pi():
+    from pishot import non_frex_shot, open_shutter, close_shutter
 
 app = Flask(__name__)
 
@@ -28,7 +32,7 @@ def get_hw_id():
 
 def ip_update_loop(secret, verbose):
     secret = get_thing(secret)
-    
+
     while True:
         try:
             ips = []
@@ -59,6 +63,30 @@ def reboot():
     os.system('reboot now')
     return jsonify({"ok": "ok"})
 
+@app.route('/capture')
+def capture():
+    if is_raspberry_pi():
+        non_frex_shot("capture.jpg")
+
+    with open("capture.jpg", "rb") as f:
+        b64 = base64.b64encode(f.read())
+
+    return "data:image/jpeg;base64," + b64
+
+@app.route('/open')
+def open_shutter():
+    if is_raspberry_pi():
+        open_shutter()
+
+    return "OK"
+
+@app.route('/close')
+def close_shutter():
+    if is_raspberry_pi():
+        close_shutter()
+
+    return "OK"
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="PiShot slave server.")
 
@@ -80,7 +108,11 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    ip_thread = threading.Thread(target=ip_update_loop, args=(args.secret, args.verbose,))
+    ip_thread = threading.Thread(
+        target=ip_update_loop,
+        args=(args.secret, args.verbose,)
+    )
+    
     ip_thread.daemon = True
     ip_thread.start()
 

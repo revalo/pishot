@@ -17,7 +17,6 @@
             <div class="logo">PiShot</div>
             <div class="nav">
                 <div @click="view = 'devices'" class="nav-item">Devices</div>
-                <div @click="view = 'onion'" class="nav-item">Onion Skin</div>
                 <div @click="view = 'shutter'" class="nav-item">Shutter</div>
             </div>
         </div>
@@ -75,21 +74,30 @@
                     <h3>{{ currentViewPi.name }}</h3>
                     {% endraw %}
                 </div>
-                <div class="viewport">
-                    <img class="vf" :src="vf" alt="">
+                <div class="viewport" :style="{ backgroundImage: `url(${vf})` }">
+                    <div class="onionVf" :style="{ backgroundImage: `url(${onionVf})` }"></div>
                 </div>
                 <div class="view-head">
                     {% raw %}
-                    <select class="ui search dropdown">
-                        <option value="">None</option>
-                        <option :value="pi.uuid" v-for="pi in pis">{{ pi.name }}</option>
-                    </select>
+                    <div>
+                        Onion Skin:
+                        <select v-model="onion" class="ui search dropdown">
+                            <option value="">None</option>
+                            <option :value="pi.uuid" v-for="pi in pis">{{ pi.name }}</option>
+                        </select>
+                    </div>
                     {% endraw %}
                 </div>
             </div>
 
             <div class="shutter" v-if="view == 'shutter'">
-
+                <button class="ui primary button">
+                    Open Shutter
+                </button>
+                <button class="ui button">
+                    Close Shutter
+                </button>
+                <div class="ui active inline small loader" v-if="shutterLoading"></div>
             </div>
         </div>
     </div>

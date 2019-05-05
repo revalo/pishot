@@ -104,6 +104,23 @@ def reboot_device(uuid):
             'error': 'error',
         })
 
+@app.route("/api/<uuid>/capture")
+def capture_device(uuid):
+    ip = PIS.get(uuid, "")
+
+    try:
+        r = requests.get(api_root(ip) + '/capture')
+        return jsonify({
+            'image': r.text,
+            'success': True,
+        })
+    except Exception as e:
+        print(e)
+        return jsonify({
+            'success': False,
+            'error': 'error',
+        })
+
 @app.route("/")
 def index():
     return render_template("app.html")

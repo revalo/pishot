@@ -20,6 +20,11 @@ GPIO.setup(CLONE_PIN, GPIO.OUT)
 raspivid_process = None
 trigger_process = None
 
+def non_frex_shot(fn="test.jpg"):
+    process = subprocess.Popen(
+        ("raspistill -o %s --nopreview --exposure sports --timeout 1" % fn).split()
+    )
+    process.wait()
 
 def write_frex_registers():
     """Enables FREX mode on the ov5647 camera module. And sets the integration
@@ -52,7 +57,7 @@ def open_shutter():
     write_frex_registers()
 
 
-def close_shutter(filename):
+def close_shutter(filename="temp.264"):
     """Close the shutter and save the FREX frames.
     """
 

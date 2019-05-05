@@ -6,6 +6,9 @@ let app = new Vue({
         view: 'devices',
         pis: [],
         vf: '',
+        onion: '',
+        onionVf: '',
+        shutterLoading: false,
     },
     methods: {
         reloadDevices: function() {
@@ -30,7 +33,15 @@ let app = new Vue({
             copyStringToClipboard(ip);
         },
         requestViewFrame() {
+            axios.get('/api/' + this.currentViewPi.uuid + '/capture').then((r) => {
+                this.vf = r.data.image;
+            });
 
+            if (this.onion !== '') {
+                axios.get('/api/' + this.onion + '/capture').then((r) => {
+                    this.onionVf = r.data.image;
+                });
+            }
         },
     },
     mounted: function() {
