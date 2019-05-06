@@ -94,10 +94,18 @@
                 <button class="ui primary button" @click="openShutter">
                     Open Shutter
                 </button>
-                <button class="ui button" @click="closeShutter">
+                <button class="ui red button" @click="closeShutter">
                     Close Shutter
                 </button>
+                <button class="ui orange button" @click="download">
+                    Download Data
+                </button>
                 <div class="ui active inline small loader" v-if="shutterLoading"></div>
+                <br>
+
+                {% raw %}
+                <h3 v-if="currentSave != ''">Saved to: {{ currentSave }}</h3>
+                {% endraw %}
             </div>
         </div>
     </div>

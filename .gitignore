@@ -9,3 +9,5 @@ pishot
 *.mp4
 *.pyc
 __pycache__
+temp
+captures

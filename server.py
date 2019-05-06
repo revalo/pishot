@@ -13,7 +13,7 @@ import os
 
 from utils import get_thing, is_raspberry_pi
 from uuid import getnode as get_mac
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_file
 
 if is_raspberry_pi():
     from pishot import non_frex_shot, open_shutter, close_shutter
@@ -87,6 +87,10 @@ def close_shutter():
 
     return "OK"
 
+@app.route('/download')
+def download_file():
+    return send_file("temp.264")
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="PiShot slave server.")
 
@@ -112,7 +116,7 @@ if __name__ == "__main__":
         target=ip_update_loop,
         args=(args.secret, args.verbose,)
     )
-    
+
     ip_thread.daemon = True
     ip_thread.start()
 

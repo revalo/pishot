@@ -10,6 +10,7 @@ let app = new Vue({
         onionVf: '',
         shutterLoading: false,
         shutterErrors: [],
+        currentSave: '',
     },
     methods: {
         device(uuid) {
@@ -59,6 +60,14 @@ let app = new Vue({
             axios.get('/api/close').then((r) => {
                 this.shutterLoading = false;
                 this.shutterErrors = r.data.errors;
+            });
+        },
+        download() {
+            this.shutterLoading = true;
+            axios.get('/api/download').then((r) => {
+                this.shutterLoading = false;
+                this.shutterErrors = r.data.errors;
+                this.currentSave = r.data.save_number;
             });
         },
     },

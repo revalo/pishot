@@ -7,6 +7,8 @@ import requests
 import argparse
 import dweepy
 import webbrowser
+import shutil
+import os
 
 from utils import get_name, get_thing
 from multiprocessing import current_process
@@ -131,7 +133,7 @@ def open_shutter():
             requests.get(api_root(ip) + '/open')
         except Exception as e:
             print(e)
-            errors.append(get_name(uuid))
+            errors.append(uuid)
 
     return jsonify({
         'errors': errors,
@@ -146,9 +148,56 @@ def close_shutter():
             requests.get(api_root(ip) + '/close')
         except Exception as e:
             print(e)
-            errors.append(get_name(uuid))
+            errors.append(uuid)
 
     return jsonify({
+        'errors': errors,
+    })
+
+def fn(uuid):
+    return "%s-%s.264" % (get_name(uuid), uuid)
+
+@app.route("/api/download")
+def download_files():
+    errors = []
+
+    if os.path.exists("temp"):
+        shutil.rmtree("temp")
+
+    os.mkdir("temp")
+
+    if not os.path.exists("captures"):
+        os.mkdir("captures")
+
+    d = 'captures'
+    dirs = sorted([
+        int(o)
+        for o in os.listdir(d) 
+        if os.path.isdir(os.path.join(d,o))
+    ])
+
+    current = str(dirs[-1] + 1) if len(dirs) != 0 else str(1)
+
+    os.mkdir(os.path.join('captures', current))
+
+    for uuid, ip in PIS.items():
+        try:
+            r = requests.get(api_root(ip) + '/download', allow_redirects=True)
+            
+            with open(os.path.join('temp', fn(uuid)), 'wb') as f:
+                f.write(r.content)
+
+            shutil.copyfile(
+                os.path.join('temp', fn(uuid)),
+                os.path.join('captures', current, fn(uuid))
+            )
+
+        except Exception as e:
+            print(e)
+            errors.append(uuid)
+
+    return jsonify({
+        'save_number': current,
         'errors': errors,
     })
 
