@@ -11,6 +11,7 @@ import argparse
 import requests
 import base64
 import os
+import random
 
 from utils import get_thing, is_raspberry_pi
 from uuid import getnode as get_mac
@@ -60,26 +61,29 @@ def get_hw_id():
 def ip_update_loop(secret, verbose):
     secret = get_thing(secret)
 
+    master_ip = ""
+
+    while True:
+        print("Getting master")
+        try:
+            d = dweepy.get_latest_dweet_for(secret)
+            print(d)
+            master_ip = d[0]['content']['master_ip']
+            break
+        except Exception as e:
+            print(e)
+
+        time.sleep(random.randint(4, 30))
+
+    print("Master IP", master_ip)
+
     while True:
         try:
-            ips = []
-            try:
-                d = dweepy.get_latest_dweet_for(secret)
-                ips = d[0]['content']['ips']
-            except:
-                pass
-
-            ip = get_ip()
-            if ip not in ips:
-                ips.append(ip)
-                dweepy.dweet_for(secret, {'ips': ips})
-
-            if verbose:
-                print(ips)
+            requests.get("http://%s:5555/ip/%s" % (master_ip, get_ip()))
         except:
             pass
+        time.sleep(3)
 
-        time.sleep(20)
 
 @app.route('/ping')
 def ping():

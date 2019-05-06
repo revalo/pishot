@@ -9,8 +9,10 @@ import dweepy
 import webbrowser
 import shutil
 import os
+import random
+import time
 
-from utils import get_name, get_thing
+from utils import get_name, get_thing, get_ip
 from multiprocessing import current_process
 from flask import Flask, render_template, jsonify
 
@@ -60,13 +62,66 @@ def get_addresses(secret):
 
     return rv
 
+def post_ip(secret):
+    secret = get_thing(secret)
+    ip = get_ip()
+
+    while True:
+        try:
+            print("Posting", ip)
+            dweepy.dweet_for(secret, {'master_ip': ip})
+            break
+        except Exception as e:
+            print(e)
+
+        print("Reposting!")
+        time.sleep(random.randint(3, 40))
+
+@app.route("/ip/<ip>")
+def register_ip(ip):
+    url = api_root(ip) + "/ping"
+
+    try:
+        r = requests.get(url, timeout=2)
+        j = r.json()
+
+        if 'uuid' not in j:
+            return "Nope"
+
+        PIS[j['uuid']] = ip
+    except:
+        pass
+
+    return "OK"
+
+
 @app.route("/api/refresh")
 def refresh_device_list():
     global SECRET
     global PIS
 
-    PIS = get_addresses(SECRET)
+    grr = PIS.copy()
+
+    for uuid, ip in PIS.items():
+        url = api_root(ip) + "/ping"
+
+        try:
+            r = requests.get(url, timeout=2)
+            j = r.json()
+        except:
+            del grr[uuid] 
+
+    PIS = grr
+
     return device_list()
+
+# @app.route("/api/refresh")
+# def refresh_device_list():
+#     global SECRET
+#     global PIS
+
+#     PIS = get_addresses(SECRET)
+#     return device_list()
 
 @app.route("/api/pis")
 def device_list():
@@ -243,6 +298,7 @@ if __name__ == "__main__":
 
         print("Found %i Pi's." % len(pis))
     else:
+        post_ip(args.secret)
         SECRET = args.secret
 
         if not args.silent:
