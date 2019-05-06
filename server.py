@@ -55,7 +55,7 @@ def get_hw_id():
     with open('/home/pi/serial.txt', 'w') as f:
         f.write(uid)
 
-    return uid
+    return uid.strip()
 
 def ip_update_loop(secret, verbose):
     secret = get_thing(secret)
