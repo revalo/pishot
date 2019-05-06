@@ -91,10 +91,10 @@
             </div>
 
             <div class="shutter" v-if="view == 'shutter'">
-                <button class="ui primary button">
+                <button class="ui primary button" @click="openShutter">
                     Open Shutter
                 </button>
-                <button class="ui button">
+                <button class="ui button" @click="closeShutter">
                     Close Shutter
                 </button>
                 <div class="ui active inline small loader" v-if="shutterLoading"></div>

@@ -9,8 +9,12 @@ let app = new Vue({
         onion: '',
         onionVf: '',
         shutterLoading: false,
+        shutterErrors: [],
     },
     methods: {
+        device(uuid) {
+            return this.pis.filter((x) => x.uuid == uuid)[0];
+        },
         reloadDevices: function() {
            this.loadingDevices = true;
            axios.get('/api/refresh').then((r) => {
@@ -42,6 +46,20 @@ let app = new Vue({
                     this.onionVf = r.data.image;
                 });
             }
+        },
+        openShutter() {
+            this.shutterLoading = true;
+            axios.get('/api/open').then((r) => {
+                this.shutterLoading = false;
+                this.shutterErrors = r.data.errors;
+            });
+        },
+        closeShutter() {
+            this.shutterLoading = true;
+            axios.get('/api/close').then((r) => {
+                this.shutterLoading = false;
+                this.shutterErrors = r.data.errors;
+            });
         },
     },
     mounted: function() {

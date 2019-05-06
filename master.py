@@ -121,6 +121,37 @@ def capture_device(uuid):
             'error': 'error',
         })
 
+@app.route("/api/open")
+def open_shutter():
+    errors = []
+
+    for uuid, ip in PIS.items():
+        try:
+            requests.get(api_root(ip) + '/close')
+            requests.get(api_root(ip) + '/open')
+        except Exception as e:
+            print(e)
+            errors.append(get_name(uuid))
+
+    return jsonify({
+        'errors': errors,
+    })
+
+@app.route("/api/close")
+def close_shutter():
+    errors = []
+
+    for uuid, ip in PIS.items():
+        try:
+            requests.get(api_root(ip) + '/close')
+        except Exception as e:
+            print(e)
+            errors.append(get_name(uuid))
+
+    return jsonify({
+        'errors': errors,
+    })
+
 @app.route("/")
 def index():
     return render_template("app.html")
