@@ -34,6 +34,7 @@ def get_addresses(secret):
     try:
         d = dweepy.get_latest_dweet_for(secret)
         ips = d[0]['content']['ips']
+        print(ips)
     except Exception as e:
         print(e)
 

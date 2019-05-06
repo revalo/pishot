@@ -74,14 +74,14 @@ def capture():
     return "data:image/jpeg;base64," + b64
 
 @app.route('/open')
-def open_shutter():
+def open_shutter_route():
     if is_raspberry_pi():
         open_shutter()
 
     return "OK"
 
 @app.route('/close')
-def close_shutter():
+def close_shutter_route():
     if is_raspberry_pi():
         close_shutter()
 
