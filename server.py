@@ -45,7 +45,7 @@ def get_hw_id():
     if not is_raspberry_pi():
         return str(hex(get_mac()))
     
-    return 
+    return getserial()
 
 def ip_update_loop(secret, verbose):
     secret = get_thing(secret)
