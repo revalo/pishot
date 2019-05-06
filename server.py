@@ -27,8 +27,25 @@ def get_ip():
 
     return (([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")] or [[(s.connect(("8.8.8.8", 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) + ["no IP found"])[0]
 
+def getserial():
+    # Extract serial from cpuinfo file
+    cpuserial = "0000000000000000"
+    try:
+        f = open('/proc/cpuinfo', 'r')
+        for line in f:
+            if line[0:6] == 'Serial':
+                cpuserial = line[10:26]
+        f.close()
+    except:
+        cpuserial = "ERROR000000000"
+
+    return cpuserial
+
 def get_hw_id():
-    return str(hex(get_mac()))
+    if not is_raspberry_pi():
+        return str(hex(get_mac()))
+    
+    return 
 
 def ip_update_loop(secret, verbose):
     secret = get_thing(secret)
