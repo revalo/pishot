@@ -8,6 +8,7 @@ import dweepy
 import time
 import threading
 import argparse
+import requests
 import base64
 import os
 
@@ -38,14 +39,23 @@ def getserial():
         f.close()
     except:
         cpuserial = "ERROR000000000"
-
     return cpuserial
 
 def get_hw_id():
     if not is_raspberry_pi():
         return str(hex(get_mac()))
     
-    return getserial()
+    if os.path.exists('/home/pi/serial.txt'):
+        with open('/home/pi/serial.txt', 'r') as f:
+            return f.read().strip()
+    
+    r = requests.get("https://www.uuidgenerator.net/api/version4")
+    uid = str(r.content)
+
+    with open('/home/pi/serial.txt', 'w') as f:
+        f.write(uid)
+
+    return uid
 
 def ip_update_loop(secret, verbose):
     secret = get_thing(secret)
