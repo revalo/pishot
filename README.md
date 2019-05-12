@@ -122,6 +122,8 @@ Shreyas Kapur as our final project for our class at MIT called [6.163: Strobe Pr
 The work was done under the supervision of Dr. James Bales, who is an absolute
 legend at helping us figure stuff out.
 
+Thanks to [HermannSW](https://github.com/Hermann-SW) for his very detailed RaspberryPi forum posts, personal emails and communication to help us figure out the workings of the ov5647 camera module.
+
 ## License
 
 Copyright (c) 2019 Shreyas Kapur. Released under MIT License.
