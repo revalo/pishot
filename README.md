@@ -9,7 +9,7 @@ The project is still under active development.
 
 ![Soap](https://media.giphy.com/media/SqlCEUcH99U4Ve158v/giphy.gif)
 
-Bullet going through a Bar of Soap.
+[Bullet going through a Bar of Soap](https://media.giphy.com/media/SqlCEUcH99U4Ve158v/source.mp4)
 
 ## Setup
 
