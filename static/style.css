@@ -61,6 +61,7 @@ body {
     height: 480px;
     border: 1px black solid;
     background-size: contain;
+    transform: rotateX(180deg);
 }
 
 .view-head {

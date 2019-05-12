@@ -58,7 +58,11 @@ def get_hw_id():
 
     return uid.strip()
 
+last_ip = "ha"
+
 def ip_update_loop(secret, verbose):
+    global last_ip
+
     secret = get_thing(secret)
 
     master_ip = ""
@@ -78,10 +82,12 @@ def ip_update_loop(secret, verbose):
     print("Master IP", master_ip)
 
     while True:
-        try:
-            requests.get("http://%s:5555/ip/%s" % (master_ip, get_ip()))
-        except:
-            pass
+        if (last_ip != get_ip()):
+            try:
+                requests.get("http://%s:5555/ip/%s" % (master_ip, get_ip()))
+                last_ip = get_ip()
+            except:
+                last_ip = "ha"
         time.sleep(3)
 
 
