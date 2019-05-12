@@ -7,15 +7,9 @@ without a rolling shutter, and allows for precise syncing of multiple Pi's.
 
 The project is still under active development.
 
-## Examples
+![Soap](https://media.giphy.com/media/SqlCEUcH99U4Ve158v/giphy.gif)
 
-Here is a ball splashing in water,
-
-![PiShot Example](https://media.giphy.com/media/LpFQidfr2nncv47Wto/giphy.gif)
-
-Here is a balloon popping at two different angles,
-
-![PiShot Example 2](https://media.giphy.com/media/H7rjlqfdurNpekRdOX/giphy.gif)
+Bullet going through a Bar of Soap.
 
 ## Setup
 
