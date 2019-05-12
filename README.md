@@ -11,6 +11,10 @@ The project is still under active development.
 
 [Bullet going through a Bar of Soap](https://media.giphy.com/media/SqlCEUcH99U4Ve158v/source.mp4)
 
+![Apple1](https://media.giphy.com/media/QZn7DqKHY478NnbGjp/giphy.gif)
+
+[Bullet going through an Apple](https://media.giphy.com/media/QZn7DqKHY478NnbGjp/source.mp4)
+
 ## Setup
 
 Enable the camera using `sudo raspi-config`. Make sure that you can take an
