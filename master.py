@@ -115,14 +115,6 @@ def refresh_device_list():
 
     return device_list()
 
-# @app.route("/api/refresh")
-# def refresh_device_list():
-#     global SECRET
-#     global PIS
-
-#     PIS = get_addresses(SECRET)
-#     return device_list()
-
 @app.route("/api/pis")
 def device_list():
     return jsonify([{
