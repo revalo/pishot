@@ -1,11 +1,7 @@
 # PiShot
 ![Python](https://img.shields.io/badge/python-v2.7+-blue.svg) [![License](https://img.shields.io/badge/license-MIT-orange.svg)](https://opensource.org/licenses/MIT)
 
-PiShot allows capturing high-speed strobe images using the Raspberry Pi v1
-Camera. Specifically, it allows the v1 camera to operate in an open shutter mode
-without a rolling shutter, and allows for precise syncing of multiple Pi's.
-
-The project is still under active development.
+PiShot allows capturing high-speed strobe images using the Raspberry Pi Camera.
 
 ![Soap](https://media.giphy.com/media/SqlCEUcH99U4Ve158v/giphy.gif)
 
@@ -14,6 +10,36 @@ The project is still under active development.
 ![Apple1](https://media.giphy.com/media/QZn7DqKHY478NnbGjp/giphy.gif)
 
 [Bullet going through an Apple](https://media.giphy.com/media/QZn7DqKHY478NnbGjp/source.mp4)
+
+![Banana1](https://media.giphy.com/media/dZXlampTLZReAnPxm1/giphy.gif)
+
+[Bullet going through a Banana](https://media.giphy.com/media/dZXlampTLZReAnPxm1/source.mp4)
+
+## Overview
+
+The inspiration for this effect is from the original Matrix movie,
+
+![MatrixScene](https://media.giphy.com/media/1yvoDVJQsTfHi/giphy.gif)
+
+Tradionally this effect is acheived by putting a bunch of super expensive cameras in a ring around the scence,
+
+![MatrixSetup](https://www.cinema5d.com/wp-content/uploads/2013/05/matrix-bullet-time.jpg)
+
+But this gets really expensive and doesn't scale well if you are using a $300 DSLR for every camera. PiShot makes use of a $5 Raspberry Pi and $5 Camera module to get a similar effect.
+
+Our setup is shown below,
+
+![Setup](https://i.imgur.com/Tvx8bVn.jpg)
+
+## Challenges
+
+![ShutterTypes](https://pbblogassets.s3.amazonaws.com/uploads/2016/06/Rolling-Shutter.gif)
+
+* The Pi camera modules (and any cheap camera really) have a rolling shutter instead of a global shutter. If we fire a strobe we'll only get a single row of pixels to be illuminated. PiShot allows operating the camera modules in a global shutter mode.
+
+* It's hard to operate 16 RaspberryPi's and trigger them at the same time. PiShot comes built-in with multiple Pi control and hostname discovery.
+
+* It's hard to make sure all cameras have the subject in the exact same location. PiShot has an _onion skin_ feature which composes multiple camera images on top of each other to adjust where the cameras are looking.
 
 ## Setup
 
