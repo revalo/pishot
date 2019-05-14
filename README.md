@@ -21,7 +21,7 @@ The inspiration for this effect is from the original Matrix movie,
 
 ![MatrixScene](https://media.giphy.com/media/1yvoDVJQsTfHi/giphy.gif)
 
-Tradionally this effect is acheived by putting a bunch of super expensive cameras in a ring around the scence,
+Traditionally this effect is achieved by putting a bunch of super expensive cameras in a ring around the scene,
 
 ![MatrixSetup](https://www.cinema5d.com/wp-content/uploads/2013/05/matrix-bullet-time.jpg)
 
